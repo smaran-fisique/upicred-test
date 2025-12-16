@@ -19,7 +19,7 @@ const Index = () => {
           <CredUPILogo className="mb-12" />
           
           <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-8 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">
-            Your credit building starts here.
+            Improve your credit score through everyday UPI payments
           </h1>
 
           {/* Feature Cards */}
@@ -29,8 +29,8 @@ const Index = () => {
                 <CreditCard className="w-6 h-6 text-primary-foreground" />
               </div>
               <div>
-                <h3 className="font-semibold mb-1">Opt into small credit</h3>
-                <p className="text-sm text-muted-foreground">Start with micro-credit tailored for first-timers</p>
+                <h3 className="font-semibold mb-1">Start with a small starter credit</h3>
+                <p className="text-sm text-muted-foreground">Get access to a low-amount credit line designed for first-time credit users.</p>
               </div>
             </div>
 
@@ -39,8 +39,8 @@ const Index = () => {
                 <Smartphone className="w-6 h-6 text-primary-foreground" />
               </div>
               <div>
-                <h3 className="font-semibold mb-1">Build credit with UPI</h3>
-                <p className="text-sm text-muted-foreground">Pay using UPI and watch your credit score grow</p>
+                <h3 className="font-semibold mb-1">Build credit score through UPI payments</h3>
+                <p className="text-sm text-muted-foreground">Use UPI as usual. On-time re-payments help improving your credit score every time</p>
               </div>
             </div>
           </div>
