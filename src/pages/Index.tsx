@@ -19,7 +19,7 @@ const Index = () => {
           <CredUPILogo className="mb-12" />
           
           <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-8 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">
-            Your first credit score starts here.
+            Your credit building starts here.
           </h1>
 
           {/* Feature Cards */}
