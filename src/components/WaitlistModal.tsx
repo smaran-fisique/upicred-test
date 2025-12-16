@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { CheckCircle2 } from "lucide-react";
+import { trackFormStep1, trackFormStep2, trackFormStep3, trackFormCompletion } from "@/lib/analytics";
 
 interface WaitlistModalProps {
   open: boolean;
@@ -31,7 +32,20 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
   const [userType, setUserType] = useState("");
   const [phone, setPhone] = useState("");
 
+  const handleStep1Next = () => {
+    trackFormStep1(intent);
+    setStep(2);
+  };
+
+  const handleStep2Next = () => {
+    trackFormStep2(userType);
+    setStep(3);
+  };
+
   const handleSubmit = () => {
+    trackFormStep3(phone);
+    trackFormCompletion({ intent, userType, phone });
+    
     const entry = {
       intent,
       userType,
@@ -81,7 +95,7 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
               ))}
             </RadioGroup>
             <Button
-              onClick={() => setStep(2)}
+              onClick={handleStep1Next}
               disabled={!intent}
               className="w-full mt-6 bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity"
             >
@@ -108,7 +122,7 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
               ))}
             </RadioGroup>
             <Button
-              onClick={() => setStep(3)}
+              onClick={handleStep2Next}
               disabled={!userType}
               className="w-full mt-6 bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity"
             >

@@ -3,9 +3,20 @@ import { Button } from "@/components/ui/button";
 import { CreditCard, Smartphone, TrendingUp, GraduationCap, Briefcase, HelpCircle } from "lucide-react";
 import CredUPILogo from "@/components/CredUPILogo";
 import WaitlistModal from "@/components/WaitlistModal";
+import { trackCTA1Click, trackCTA2Click } from "@/lib/analytics";
 
 const Index = () => {
   const [modalOpen, setModalOpen] = useState(false);
+
+  const handleCTA1Click = () => {
+    trackCTA1Click();
+    setModalOpen(true);
+  };
+
+  const handleCTA2Click = () => {
+    trackCTA2Click();
+    setModalOpen(true);
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -52,7 +63,7 @@ const Index = () => {
 
           {/* Primary CTA */}
           <Button
-            onClick={() => setModalOpen(true)}
+            onClick={handleCTA1Click}
             size="lg"
             className="w-full h-14 text-lg font-semibold bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity rounded-2xl shadow-lg shadow-primary/25"
           >
@@ -94,7 +105,7 @@ const Index = () => {
         <div className="text-center p-8 bg-gradient-to-br from-primary/5 to-accent/5 rounded-3xl border border-border/50">
           <h3 className="text-xl font-semibold mb-4">Ready to build your credit?</h3>
           <Button
-            onClick={() => setModalOpen(true)}
+            onClick={handleCTA2Click}
             size="lg"
             className="h-12 px-8 font-semibold bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity rounded-xl"
           >
