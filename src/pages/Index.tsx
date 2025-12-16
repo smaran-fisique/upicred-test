@@ -18,7 +18,7 @@ const Index = () => {
         <div className="relative max-w-lg mx-auto px-6 pt-8 pb-12">
           <CredUPILogo className="mb-12" />
           
-          <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-8 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">
+          <h1 className="text-2xl md:text-3xl font-bold leading-tight mb-8 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">
             Improve your credit score through everyday UPI payments
           </h1>
 
