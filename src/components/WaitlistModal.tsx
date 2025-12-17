@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -41,65 +41,25 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
     }
   }, [open]);
 
-  // Save partial entry when modal closes without completion
+  // Track if we've already saved to prevent duplicates
+  const hasBeenSavedRef = useRef(false);
+
+  // Reset saved flag when modal opens
   useEffect(() => {
-    if (!open && (intent || userType) && step !== 4) {
-      // Only save if there's at least some data and it's not a completed submission
-      const savePartialEntry = async () => {
-        if (!intent && !userType) return; // Don't save if nothing is filled
-        
-        const partialEntry = {
-          intent: intent || '',
-          userType: userType || '',
-          phone: phone ? `+91${phone}` : '',
-          timestamp: new Date().toISOString(),
-        };
-        
-        // Submit partial entry to Google Sheets
-        await submitToGoogleSheets(partialEntry);
-        
-        // Also store in localStorage as backup
-        const existing = JSON.parse(localStorage.getItem("credupi_waitlist") || "[]");
-        existing.push(partialEntry);
-        localStorage.setItem("credupi_waitlist", JSON.stringify(existing));
-      };
-      
-      savePartialEntry();
+    if (open) {
+      hasBeenSavedRef.current = false;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
-  const handleStep1Next = async () => {
+  const handleStep1Next = () => {
     trackFormStep1(intent);
-    
-    // Save partial entry with just intent
-    if (intent) {
-      const partialEntry = {
-        intent: intent,
-        userType: '',
-        phone: '',
-        timestamp: new Date().toISOString(),
-      };
-      await submitToGoogleSheets(partialEntry);
-    }
-    
+    // Just move to next step - data is cached, will save on modal close
     setStep(2);
   };
 
-  const handleStep2Next = async () => {
+  const handleStep2Next = () => {
     trackFormStep2(userType);
-    
-    // Save partial entry with intent and userType
-    if (intent || userType) {
-      const partialEntry = {
-        intent: intent || '',
-        userType: userType || '',
-        phone: '',
-        timestamp: new Date().toISOString(),
-      };
-      await submitToGoogleSheets(partialEntry);
-    }
-    
+    // Just move to next step - data is cached, will save on modal close
     setStep(3);
   };
 
@@ -114,7 +74,11 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
       timestamp: new Date().toISOString(),
     };
     
+    // Mark as saved so it doesn't save again on modal close
+    hasBeenSavedRef.current = true;
+    
     // Submit to Google Sheets
+    console.log('💾 Saving completed entry:', entry);
     await submitToGoogleSheets(entry);
     
     // Also store in localStorage as backup
@@ -128,15 +92,49 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
     setTimeout(() => setShowConfetti(false), 3000);
   };
 
-  const handleClose = () => {
-    onOpenChange(false);
+  const handleClose = (newOpenState: boolean) => {
+    // Only save if modal is being closed (newOpenState is false and currently open)
+    if (!newOpenState && open) {
+      // Save partial entry if form wasn't completed and we haven't saved yet
+      if (step !== 4 && !hasBeenSavedRef.current) {
+        const currentIntent = intent || '';
+        const currentUserType = userType || '';
+        const currentPhone = phone ? `+91${phone}` : '';
+        
+        // Only save if there's meaningful data
+        if (currentIntent || currentUserType || currentPhone) {
+          hasBeenSavedRef.current = true; // Mark as saved to prevent duplicates
+          
+          const entry = {
+            intent: currentIntent,
+            userType: currentUserType,
+            phone: currentPhone,
+            timestamp: new Date().toISOString(),
+          };
+          
+          console.log('💾 Saving partial entry on modal close:', entry);
+          
+          // Submit to Google Sheets (don't await - fire and forget)
+          submitToGoogleSheets(entry).then(() => {
+            // Also store in localStorage as backup
+            const existing = JSON.parse(localStorage.getItem("credupi_waitlist") || "[]");
+            existing.push(entry);
+            localStorage.setItem("credupi_waitlist", JSON.stringify(existing));
+          });
+        }
+      }
+    }
+    
+    onOpenChange(newOpenState);
     // Reset after close animation
-    setTimeout(() => {
-      setStep(1);
-      setIntent("");
-      setUserType("");
-      setPhone("");
-    }, 300);
+    if (!newOpenState) {
+      setTimeout(() => {
+        setStep(1);
+        setIntent("");
+        setUserType("");
+        setPhone("");
+      }, 300);
+    }
   };
 
   const isPhoneValid = phone.length === 10 && /^\d+$/.test(phone);

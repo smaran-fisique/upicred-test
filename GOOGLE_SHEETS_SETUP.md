@@ -78,7 +78,7 @@ function doPost(e) {
     // Log for debugging (check Executions in Apps Script)
     console.log('Data received:', data);
     
-    // Return success response
+    // Return success response with CORS headers
     return ContentService
       .createTextOutput(JSON.stringify({ success: true }))
       .setMimeType(ContentService.MimeType.JSON);
@@ -86,7 +86,7 @@ function doPost(e) {
     // Log error for debugging
     console.error('Error in doPost:', error);
     
-    // Return error response
+    // Return error response with CORS headers
     return ContentService
       .createTextOutput(JSON.stringify({ success: false, error: error.toString() }))
       .setMimeType(ContentService.MimeType.JSON);
