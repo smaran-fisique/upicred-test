@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { CreditCard, Smartphone, TrendingUp, GraduationCap, Briefcase, HelpCircle, ArrowRight, CheckCircle2, Users, Award } from "lucide-react";
+import { GraduationCap, Briefcase, HelpCircle, Users } from "lucide-react";
 import CredUPILogo from "@/components/CredUPILogo";
 import WaitlistModal from "@/components/WaitlistModal";
-import { trackCTA1Click, trackCTA2Click } from "@/lib/analytics";
+import { trackCTA1Click } from "@/lib/analytics";
 
 const Index = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -25,11 +25,6 @@ const Index = () => {
     setModalOpen(true);
   };
 
-  const handleCTA2Click = () => {
-    trackCTA2Click();
-    setModalOpen(true);
-  };
-
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
@@ -38,15 +33,10 @@ const Index = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/10" />
         <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         
-        <div className="relative max-w-lg mx-auto px-6 pt-8 pb-12">
-          {/* Header with Logo and Social Proof */}
-          <div className="flex items-center justify-between mb-8">
+        <div className="relative max-w-lg mx-auto px-6 pt-8 pb-6">
+          {/* Header with Logo */}
+          <div className="flex items-center justify-center mb-8">
             <CredUPILogo />
-            {/* Social Proof */}
-            <div className="flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full">
-              <Users className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium text-primary">2 Lakh+ already joined</span>
-            </div>
           </div>
 
           <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-6">
@@ -57,114 +47,50 @@ const Index = () => {
             Turn your everyday UPI payments into credit history. No credit card needed.
           </p>
 
-          {/* How It Works - Horizontal Flow */}
-          <div className="mb-8 p-6 bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50">
-            <h2 className="text-lg font-semibold mb-6 text-center">How it works</h2>
+          {/* How It Works - Compact Card Layout */}
+          <div className="mb-0 p-6 bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50">
+            <h2 className="text-lg font-semibold mb-4 text-center">How it works</h2>
             
-            <div className="flex items-start justify-between gap-2 max-w-full overflow-x-auto">
+            <div className="flex flex-col gap-3">
               {/* Step 1 */}
-              <div className="flex flex-col items-center flex-1 min-w-0">
-                <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center mb-3 shadow-md shrink-0">
-                  <CreditCard className="w-5 h-5 text-primary-foreground" />
+              <div className="flex items-center gap-4 p-4 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl border border-primary/30 shadow-sm">
+                <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md">
+                  1
                 </div>
-                <div className="text-center">
-                  <p className="text-xs font-semibold mb-1">Get credit line</p>
-                  <p className="text-[10px] text-muted-foreground">Sanctioned first</p>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-foreground">Get credit line</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">Sanctioned instantly, no credit history needed</p>
                 </div>
               </div>
-
-              {/* Arrow */}
-              <ArrowRight className="w-5 h-5 text-muted-foreground shrink-0 mt-6" />
 
               {/* Step 2 */}
-              <div className="flex flex-col items-center flex-1 min-w-0">
-                <div className="w-12 h-12 bg-gradient-to-br from-accent to-primary rounded-full flex items-center justify-center mb-3 shadow-md shrink-0">
-                  <Smartphone className="w-5 h-5 text-primary-foreground" />
+              <div className="flex items-center gap-4 p-4 bg-gradient-to-r from-accent/20 to-primary/20 rounded-xl border border-accent/30 shadow-sm">
+                <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-accent to-primary rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md">
+                  2
                 </div>
-                <div className="text-center">
-                  <p className="text-xs font-semibold mb-1">Use for UPI</p>
-                  <p className="text-[10px] text-muted-foreground">Pay as usual</p>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-foreground">Use for UPI</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">Pay with UPI anywhere, just like your regular payments</p>
                 </div>
               </div>
-
-              {/* Arrow */}
-              <ArrowRight className="w-5 h-5 text-muted-foreground shrink-0 mt-6" />
 
               {/* Step 3 */}
-              <div className="flex flex-col items-center flex-1 min-w-0">
-                <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center mb-3 shadow-md shrink-0">
-                  <Award className="w-5 h-5 text-primary-foreground" />
+              <div className="flex items-center gap-4 p-4 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl border border-primary/30 shadow-sm">
+                <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md">
+                  3
                 </div>
-                <div className="text-center">
-                  <p className="text-xs font-semibold mb-1">Pay on time</p>
-                  <p className="text-[10px] text-muted-foreground">Get rewarded</p>
-                </div>
-              </div>
-
-              {/* Arrow */}
-              <ArrowRight className="w-5 h-5 text-muted-foreground shrink-0 mt-6" />
-
-              {/* Step 4 */}
-              <div className="flex flex-col items-center flex-1 min-w-0">
-                <div className="w-12 h-12 bg-gradient-to-br from-accent to-primary rounded-full flex items-center justify-center mb-3 shadow-md shrink-0">
-                  <TrendingUp className="w-5 h-5 text-primary-foreground" />
-                </div>
-                <div className="text-center">
-                  <p className="text-xs font-semibold mb-1">Score up</p>
-                  <p className="text-[10px] text-muted-foreground">Build history</p>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-foreground">Score up</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">Build your credit history and improve your score automatically</p>
                 </div>
               </div>
             </div>
           </div>
-
-          {/* Feature Cards */}
-          <div className="space-y-3 mb-6">
-            <div className="flex items-start gap-3 p-4 bg-card/50 backdrop-blur-sm rounded-xl border border-border/50">
-              <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-              <div>
-                <h3 className="font-semibold mb-1 text-sm">Start small, build smart</h3>
-                <p className="text-xs text-muted-foreground">Low-amount credit line perfect for first-timers</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3 p-4 bg-card/50 backdrop-blur-sm rounded-xl border border-border/50">
-              <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-              <div>
-                <h3 className="font-semibold mb-1 text-sm">Use UPI like normal</h3>
-                <p className="text-xs text-muted-foreground">On-time repayments boost your credit score automatically</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Trust Signals */}
-          <div className="mb-6 space-y-2">
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <CheckCircle2 className="w-4 h-4 text-primary" />
-              <span>No hidden fees</span>
-            </div>
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <CheckCircle2 className="w-4 h-4 text-primary" />
-              <span>Cancel anytime</span>
-            </div>
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <CheckCircle2 className="w-4 h-4 text-primary" />
-              <span>Partner NBFCs • Subject to eligibility</span>
-            </div>
-          </div>
-
-          {/* Primary CTA */}
-          <Button
-            onClick={handleCTA1Click}
-            size="lg"
-            className="w-full h-14 text-lg font-semibold bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity rounded-2xl shadow-lg shadow-primary/25"
-          >
-            Join Waitlist
-          </Button>
         </div>
       </section>
 
       {/* Who This Is For */}
-      <section className="max-w-lg mx-auto px-6 py-8">
+      <section className="max-w-lg mx-auto px-6 pt-4 pb-8">
         <h2 className="text-xl font-bold mb-4">Perfect for you if you're:</h2>
         
         <div className="space-y-2 mb-4">
@@ -187,23 +113,8 @@ const Index = () => {
         </p>
       </section>
 
-      {/* Repeat CTA */}
-      <section className="max-w-lg mx-auto px-6 py-8">
-        <div className="text-center p-6 bg-gradient-to-br from-primary/5 to-accent/5 rounded-2xl border border-border/50">
-          <h3 className="text-lg font-semibold mb-3">Ready to start building?</h3>
-          <p className="text-sm text-muted-foreground mb-4">Join {waitlistCount.toLocaleString()}+ others on the waitlist</p>
-          <Button
-            onClick={handleCTA2Click}
-            size="lg"
-            className="h-12 px-8 font-semibold bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity rounded-xl"
-          >
-            Join Waitlist
-          </Button>
-        </div>
-      </section>
-
       {/* Footer */}
-      <footer className="max-w-lg mx-auto px-6 py-8 border-t border-border/50">
+      <footer className="max-w-lg mx-auto px-6 pt-8 pb-32 border-t border-border/50">
         <div className="flex flex-col items-center gap-4">
           <CredUPILogo />
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
@@ -254,6 +165,25 @@ const Index = () => {
 
       {/* Waitlist Modal */}
       <WaitlistModal open={modalOpen} onOpenChange={setModalOpen} />
+
+      {/* Sticky Bottom CTA */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-t border-border/50 shadow-lg">
+        <div className="max-w-lg mx-auto px-6 py-3">
+          {/* Social Proof */}
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <Users className="w-4 h-4 text-primary" />
+            <span className="text-xs font-medium text-primary">2 Lakh+ on the waitlist</span>
+          </div>
+          <Button
+            onClick={handleCTA1Click}
+            size="lg"
+            className="w-full h-14 text-lg font-semibold bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity rounded-2xl shadow-lg shadow-primary/25 relative overflow-hidden"
+          >
+            <span className="relative z-10">Join Waitlist</span>
+            <div className="absolute inset-0 animate-shimmer bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };
