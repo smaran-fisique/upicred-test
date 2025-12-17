@@ -53,7 +53,7 @@ const Index = () => {
             {/* Subtle gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 pointer-events-none" />
             <div className="relative z-10">
-              <h2 className="text-lg font-semibold mb-4 text-center">Start Building Credit in 3 Simple Steps</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">How it works</h2>
             
             <div className="flex flex-col gap-3">
               {/* Step 1 */}
