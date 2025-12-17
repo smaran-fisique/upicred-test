@@ -49,7 +49,7 @@ const Index = () => {
 
           {/* How It Works - Compact Card Layout */}
           <div className="mb-0 p-6 bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50">
-            <h2 className="text-lg font-semibold mb-4 text-center">How it works</h2>
+            <h2 className="text-lg font-semibold mb-4 text-center">Start Building Credit in 3 Simple Steps</h2>
             
             <div className="flex flex-col gap-3">
               {/* Step 1 */}
