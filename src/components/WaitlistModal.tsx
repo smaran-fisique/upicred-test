@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -31,6 +31,14 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
   const [intent, setIntent] = useState("");
   const [userType, setUserType] = useState("");
   const [phone, setPhone] = useState("");
+  const [showConfetti, setShowConfetti] = useState(false);
+
+  // Reset confetti when modal closes
+  useEffect(() => {
+    if (!open) {
+      setShowConfetti(false);
+    }
+  }, [open]);
 
   const handleStep1Next = () => {
     trackFormStep1(intent);
@@ -59,6 +67,9 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
     localStorage.setItem("credupi_waitlist", JSON.stringify(existing));
     
     setStep(4);
+    setShowConfetti(true);
+    // Hide confetti after animation
+    setTimeout(() => setShowConfetti(false), 3000);
   };
 
   const handleClose = () => {
@@ -74,14 +85,72 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
 
   const isPhoneValid = phone.length === 10 && /^\d+$/.test(phone);
 
+  // Progress indicator component
+  const ProgressIndicator = () => (
+    <div className="flex items-center justify-center gap-2 mb-6">
+      {[1, 2, 3].map((s) => (
+        <div key={s} className="flex items-center gap-2">
+          <div
+            className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all ${
+              step > s
+                ? "bg-primary text-primary-foreground"
+                : step === s
+                ? "bg-primary text-primary-foreground scale-110"
+                : "bg-muted text-muted-foreground"
+            }`}
+          >
+            {step > s ? "✓" : s}
+          </div>
+          {s < 3 && (
+            <div
+              className={`w-8 h-0.5 transition-all ${
+                step > s ? "bg-primary" : "bg-muted"
+              }`}
+            />
+          )}
+        </div>
+      ))}
+    </div>
+  );
+
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-md mx-4 rounded-2xl">
+      <DialogContent className="sm:max-w-md mx-4 rounded-2xl relative overflow-hidden">
+        {/* Confetti Animation */}
+        {showConfetti && (
+          <div className="absolute inset-0 pointer-events-none z-50">
+            {[...Array(30)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute animate-confetti"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: "-10px",
+                  animationDelay: `${Math.random() * 0.5}s`,
+                  animationDuration: `${2 + Math.random()}s`,
+                }}
+              >
+                <div
+                  className={`w-2 h-2 rounded-full ${
+                    i % 3 === 0
+                      ? "bg-primary"
+                      : i % 3 === 1
+                      ? "bg-accent"
+                      : "bg-primary/60"
+                  }`}
+                />
+              </div>
+            ))}
+          </div>
+        )}
+
+        <ProgressIndicator />
+
         {step === 1 && (
           <>
             <DialogHeader>
               <DialogTitle className="text-xl font-semibold">
-                Why do you want to build a credit score?
+                Why do you want to build credit? 🎯
               </DialogTitle>
             </DialogHeader>
             <RadioGroup value={intent} onValueChange={setIntent} className="space-y-3 mt-4">
@@ -108,7 +177,7 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
           <>
             <DialogHeader>
               <DialogTitle className="text-xl font-semibold">
-                Tell us about yourself
+                Tell us about yourself 👤
               </DialogTitle>
             </DialogHeader>
             <RadioGroup value={userType} onValueChange={setUserType} className="space-y-3 mt-4">
@@ -135,7 +204,7 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
           <>
             <DialogHeader>
               <DialogTitle className="text-xl font-semibold">
-                Enter your phone number
+                Almost there! 📱
               </DialogTitle>
             </DialogHeader>
             <div className="mt-4">
@@ -166,20 +235,24 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
         )}
 
         {step === 4 && (
-          <div className="text-center py-6">
-            <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center">
-              <CheckCircle2 className="w-10 h-10 text-primary" />
+          <div className="text-center py-6 animate-in fade-in zoom-in duration-300">
+            <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center animate-in zoom-in duration-500">
+              <CheckCircle2 className="w-12 h-12 text-primary" />
             </div>
-            <h3 className="text-xl font-semibold mb-2">You're on the list! 🎉</h3>
-            <p className="text-muted-foreground text-sm">
-              We'll text you when CredUPI is ready. Thanks for your interest!
+            <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              You're in! 🎉
+            </h3>
+            <p className="text-muted-foreground text-sm mb-1">
+              We'll text you when we launch
+            </p>
+            <p className="text-xs text-muted-foreground mb-6">
+              Get ready to build credit the smart way
             </p>
             <Button
               onClick={handleClose}
-              variant="outline"
-              className="mt-6"
+              className="mt-2 bg-gradient-to-r from-primary to-accent hover:opacity-90"
             >
-              Close
+              Awesome!
             </Button>
           </div>
         )}
