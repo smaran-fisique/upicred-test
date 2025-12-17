@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Process Logo - Remove Black Background</title>
+</head>
+<body>
+    <h1>Logo Background Remover</h1>
+    <input type="file" id="fileInput" accept="image/*">
+    <canvas id="canvas" style="display:none;"></canvas>
+    <div id="result"></div>
+    
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const result = document.getElementById('result');
+        
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const img = new Image();
+            img.onload = () => {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+                
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const data = imageData.data;
+                
+                // Remove black/dark background (make transparent)
+                for (let i = 0; i < data.length; i += 4) {
+                    const r = data[i];
+                    const g = data[i + 1];
+                    const b = data[i + 2];
+                    
+                    // If pixel is very dark (black background), make it transparent
+                    if (r < 40 && g < 40 && b < 40) {
+                        data[i + 3] = 0; // Set alpha to 0 (transparent)
+                    }
+                }
+                
+                ctx.putImageData(imageData, 0, 0);
+                
+                // Convert to blob and download
+                canvas.toBlob((blob) => {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'logo-transparent.png';
+                    a.click();
+                    URL.revokeObjectURL(url);
+                    result.innerHTML = '<p style="color:green;">✓ Logo processed! File downloaded as logo-transparent.png</p>';
+                }, 'image/png');
+            };
+            
+            img.src = URL.createObjectURL(file);
+        });
+    </script>
+</body>
+</html>

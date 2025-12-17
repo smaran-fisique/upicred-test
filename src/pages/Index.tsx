@@ -62,8 +62,8 @@ const Index = () => {
                   1
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-semibold text-foreground">Get credit line</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">Sanctioned instantly, no credit history needed</p>
+                  <p className="text-sm font-semibold text-foreground">Instant Credit, Anytime!</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">Get your credit line in minutes — no paperwork, no credit history needed.</p>
                 </div>
               </div>
 
@@ -73,8 +73,8 @@ const Index = () => {
                   2
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-semibold text-foreground">Use for UPI</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">Pay with UPI anywhere, just like your regular payments</p>
+                  <p className="text-sm font-semibold text-foreground">Use Credit for UPI Payments</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">Keep scanning and paying — now on credit!</p>
                 </div>
               </div>
 
@@ -84,8 +84,8 @@ const Index = () => {
                   3
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-semibold text-foreground">Score up</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">Build your credit history and improve your score automatically</p>
+                  <p className="text-sm font-semibold text-foreground">Boost Your Credit Score, Daily!</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">Build your credit score just by paying through UPI — the smarter way to grow your credit.</p>
                 </div>
               </div>
             </div>
