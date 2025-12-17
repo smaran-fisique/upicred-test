@@ -2,24 +2,46 @@
 
 declare global {
   interface Window {
-    gtag: (...args: unknown[]) => void;
-    dataLayer: unknown[];
+    gtag?: (...args: unknown[]) => void;
+    dataLayer?: unknown[];
   }
+}
+
+// Initialize dataLayer if not present
+if (typeof window !== 'undefined' && !window.dataLayer) {
+  window.dataLayer = [];
 }
 
 // Track custom events
 export const trackEvent = (eventName: string, parameters?: Record<string, unknown>) => {
-  if (typeof window !== 'undefined' && window.gtag) {
-    window.gtag('event', eventName, parameters);
-    console.log('GA Event:', eventName, parameters);
+  if (typeof window === 'undefined') return;
+  
+  try {
+    if (window.gtag) {
+      window.gtag('event', eventName, parameters);
+      console.log('GA Event:', eventName, parameters);
+    } else {
+      // Fallback: push to dataLayer if gtag is not yet loaded
+      if (window.dataLayer) {
+        window.dataLayer.push({
+          event: eventName,
+          ...parameters,
+        });
+        console.log('GA Event (dataLayer):', eventName, parameters);
+      }
+    }
+  } catch (error) {
+    console.error('Error tracking GA event:', error);
   }
 };
 
 // CTA Click Events
 export const trackCTA1Click = () => {
   trackEvent('cta_click', {
-    cta_location: 'hero_section',
-    cta_name: 'join_waitlist_top',
+    cta_location: 'sticky_bottom',
+    cta_name: 'join_waitlist',
+    event_category: 'engagement',
+    event_label: 'sticky_cta',
   });
 };
 
@@ -61,4 +83,21 @@ export const trackFormCompletion = (data: { intent: string; userType: string; ph
     user_type: data.userType,
     phone: `+91${data.phone}`,
   });
+};
+
+// Page View Tracking
+export const trackPageView = (pagePath: string, pageTitle?: string) => {
+  if (typeof window === 'undefined') return;
+  
+  try {
+    if (window.gtag) {
+      window.gtag('config', 'G-JE5H2MK5VJ', {
+        page_path: pagePath,
+        page_title: pageTitle || document.title,
+      });
+      console.log('GA Page View:', pagePath, pageTitle);
+    }
+  } catch (error) {
+    console.error('Error tracking page view:', error);
+  }
 };

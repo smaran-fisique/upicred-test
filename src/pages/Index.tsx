@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { GraduationCap, Briefcase, HelpCircle, Users } from "lucide-react";
 import CredUPILogo from "@/components/CredUPILogo";
 import WaitlistModal from "@/components/WaitlistModal";
-import { trackCTA1Click } from "@/lib/analytics";
+import { trackCTA1Click, trackPageView } from "@/lib/analytics";
 
 const Index = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -19,6 +19,11 @@ const Index = () => {
       setWaitlistCount(2847 + entries.length);
     }
   }, [modalOpen]);
+
+  // Track page view on mount
+  useEffect(() => {
+    trackPageView(window.location.pathname, 'CredUPI - Home');
+  }, []);
 
   const handleCTA1Click = () => {
     trackCTA1Click();
@@ -39,17 +44,16 @@ const Index = () => {
             <CredUPILogo />
           </div>
 
-          <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-6">
+          <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-6 text-center">
             Build your credit score while paying with UPI
           </h1>
-          
-          <p className="text-lg text-muted-foreground mb-8">
-            Turn your everyday UPI payments into credit history. No credit card needed.
-          </p>
 
           {/* How It Works - Compact Card Layout */}
-          <div className="mb-0 p-6 bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50">
-            <h2 className="text-lg font-semibold mb-4 text-center">Start Building Credit in 3 Simple Steps</h2>
+          <div className="mb-0 p-6 bg-gradient-to-br from-card via-card/90 to-card/80 backdrop-blur-md rounded-2xl border-2 border-primary/30 shadow-2xl shadow-primary/20 relative overflow-hidden">
+            {/* Subtle gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 pointer-events-none" />
+            <div className="relative z-10">
+              <h2 className="text-lg font-semibold mb-4 text-center">Start Building Credit in 3 Simple Steps</h2>
             
             <div className="flex flex-col gap-3">
               {/* Step 1 */}
@@ -85,13 +89,18 @@ const Index = () => {
                 </div>
               </div>
             </div>
+            </div>
           </div>
+
+          <p className="text-lg text-muted-foreground mt-6 mb-4 text-center">
+            Turn your everyday UPI payments into credit history. No credit card needed.
+          </p>
         </div>
       </section>
 
       {/* Who This Is For */}
       <section className="max-w-lg mx-auto px-6 pt-4 pb-8">
-        <h2 className="text-xl font-bold mb-4">Perfect for you if you're:</h2>
+        <h2 className="text-xl font-bold mb-4 text-center">Perfect for you if you're:</h2>
         
         <div className="space-y-2 mb-4">
           <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-xl">
