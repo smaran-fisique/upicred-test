@@ -39,16 +39,18 @@ const Index = () => {
         <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         
         <div className="relative max-w-lg mx-auto px-6 pt-8 pb-12">
-          <CredUPILogo className="mb-8" />
-          
-          {/* Social Proof */}
-          <div className="flex items-center justify-center gap-2 mb-6 px-4 py-2 bg-primary/10 rounded-full w-fit mx-auto">
-            <Users className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium text-primary">{waitlistCount.toLocaleString()}+ already joined</span>
+          {/* Header with Logo and Social Proof */}
+          <div className="flex items-center justify-between mb-8">
+            <CredUPILogo />
+            {/* Social Proof */}
+            <div className="flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full">
+              <Users className="w-4 h-4 text-primary" />
+              <span className="text-sm font-medium text-primary">2 Lakh+ already joined</span>
+            </div>
           </div>
 
           <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-6">
-            Build credit while you pay with UPI 💳
+            Build your credit score while paying with UPI
           </h1>
           
           <p className="text-lg text-muted-foreground mb-8">

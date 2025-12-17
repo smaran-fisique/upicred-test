@@ -6,6 +6,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { CheckCircle2 } from "lucide-react";
 import { trackFormStep1, trackFormStep2, trackFormStep3, trackFormCompletion } from "@/lib/analytics";
+import { submitToGoogleSheets } from "@/lib/googleSheets";
 
 interface WaitlistModalProps {
   open: boolean;
@@ -40,17 +41,69 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
     }
   }, [open]);
 
-  const handleStep1Next = () => {
+  // Save partial entry when modal closes without completion
+  useEffect(() => {
+    if (!open && (intent || userType) && step !== 4) {
+      // Only save if there's at least some data and it's not a completed submission
+      const savePartialEntry = async () => {
+        if (!intent && !userType) return; // Don't save if nothing is filled
+        
+        const partialEntry = {
+          intent: intent || '',
+          userType: userType || '',
+          phone: phone ? `+91${phone}` : '',
+          timestamp: new Date().toISOString(),
+        };
+        
+        // Submit partial entry to Google Sheets
+        await submitToGoogleSheets(partialEntry);
+        
+        // Also store in localStorage as backup
+        const existing = JSON.parse(localStorage.getItem("credupi_waitlist") || "[]");
+        existing.push(partialEntry);
+        localStorage.setItem("credupi_waitlist", JSON.stringify(existing));
+      };
+      
+      savePartialEntry();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
+  const handleStep1Next = async () => {
     trackFormStep1(intent);
+    
+    // Save partial entry with just intent
+    if (intent) {
+      const partialEntry = {
+        intent: intent,
+        userType: '',
+        phone: '',
+        timestamp: new Date().toISOString(),
+      };
+      await submitToGoogleSheets(partialEntry);
+    }
+    
     setStep(2);
   };
 
-  const handleStep2Next = () => {
+  const handleStep2Next = async () => {
     trackFormStep2(userType);
+    
+    // Save partial entry with intent and userType
+    if (intent || userType) {
+      const partialEntry = {
+        intent: intent || '',
+        userType: userType || '',
+        phone: '',
+        timestamp: new Date().toISOString(),
+      };
+      await submitToGoogleSheets(partialEntry);
+    }
+    
     setStep(3);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     trackFormStep3(phone);
     trackFormCompletion({ intent, userType, phone });
     
@@ -61,7 +114,10 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
       timestamp: new Date().toISOString(),
     };
     
-    // Store in localStorage
+    // Submit to Google Sheets
+    await submitToGoogleSheets(entry);
+    
+    // Also store in localStorage as backup
     const existing = JSON.parse(localStorage.getItem("credupi_waitlist") || "[]");
     existing.push(entry);
     localStorage.setItem("credupi_waitlist", JSON.stringify(existing));
