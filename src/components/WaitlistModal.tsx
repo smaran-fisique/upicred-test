@@ -115,7 +115,7 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-md mx-4 rounded-2xl relative overflow-hidden">
+      <DialogContent className="sm:max-w-md relative overflow-hidden">
         {/* Confetti Animation */}
         {showConfetti && (
           <div className="absolute inset-0 pointer-events-none z-50">
