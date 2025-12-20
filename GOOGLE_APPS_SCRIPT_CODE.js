@@ -95,3 +95,4 @@ function doOptions() {
     .createTextOutput('')
     .setMimeType(ContentService.MimeType.JSON);
 }
+
