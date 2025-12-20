@@ -86,13 +86,21 @@ const Index = () => {
             <img 
               src="/images/how-it-works-infographic.png" 
               alt="How it works - Get Instant Credit, Use Credit For UPI, Boost Your Credit Score"
-              className="w-full h-auto rounded-2xl"
+              className="w-full h-auto rounded-2xl select-none pointer-events-none"
               style={{
                 maxHeight: imageMaxHeight ? `${imageMaxHeight}px` : 'none',
                 objectFit: 'contain',
                 objectPosition: 'top',
-                display: 'block'
+                display: 'block',
+                touchAction: 'none',
+                userSelect: 'none',
+                WebkitUserSelect: 'none',
+                WebkitTouchCallout: 'none',
+                transform: 'none',
+                transition: 'none',
+                animation: 'none'
               }}
+              draggable="false"
             />
           </div>
 
