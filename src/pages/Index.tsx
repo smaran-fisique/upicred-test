@@ -32,8 +32,8 @@ const Index = () => {
     const calculateImageHeight = () => {
       const viewportHeight = window.innerHeight;
       
-      // Use 85% of viewport height for the image
-      const imageHeight = viewportHeight * 0.85;
+      // Use 70% of viewport height for the image
+      const imageHeight = viewportHeight * 0.70;
       
       // Set max height
       setImageMaxHeight(imageHeight);
