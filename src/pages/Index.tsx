@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { GraduationCap, Briefcase, HelpCircle, Users } from "lucide-react";
+import { GraduationCap, Briefcase, HelpCircle, Users, Timer, QrCode, Gauge } from "lucide-react";
 import CredUPILogo from "@/components/CredUPILogo";
 import WaitlistModal from "@/components/WaitlistModal";
 import { trackCTA1Click, trackPageView } from "@/lib/analytics";
@@ -48,47 +48,69 @@ const Index = () => {
             Build your credit score while paying with UPI
           </h1>
 
-          {/* How It Works - Compact Card Layout */}
-          <div className="mb-0 p-6 bg-gradient-to-br from-card via-card/90 to-card/80 backdrop-blur-md rounded-2xl border-2 border-primary/30 shadow-2xl shadow-primary/20 relative overflow-hidden">
-            {/* Subtle gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 pointer-events-none" />
-            <div className="relative z-10">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">How it works</h2>
+          {/* How It Works - Infographic */}
+          <div className="mb-0 relative">
+            {/* Dark gradient background */}
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900/30 to-slate-900 rounded-2xl" />
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 rounded-2xl" />
             
-            <div className="flex flex-col gap-3">
-              {/* Step 1 */}
-              <div className="flex items-center gap-4 p-4 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl border border-primary/30 shadow-sm">
-                <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md">
-                  1
+            {/* Glowing border effect */}
+            <div className="relative p-6 md:p-8 rounded-2xl border-2 border-primary/40 shadow-2xl shadow-primary/30 backdrop-blur-sm bg-gradient-to-br from-slate-800/90 via-purple-900/20 to-slate-800/90">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 md:mb-8 text-center text-white">How it works</h2>
+            
+              {/* Three cards in horizontal layout */}
+              <div className="flex flex-col md:flex-row gap-4 md:gap-3">
+                {/* Card 1: FAST APPROVAL */}
+                <div className="flex-1 p-5 md:p-4 rounded-xl border-2 border-primary/50 bg-gradient-to-br from-slate-800/80 via-purple-800/30 to-slate-800/80 shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all hover:scale-[1.02] relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 pointer-events-none" />
+                  <div className="relative z-10 flex flex-col items-center text-center">
+                    {/* Stopwatch Icon with speed lines */}
+                    <div className="relative mb-4">
+                      <div className="absolute -left-2 top-1/2 -translate-y-1/2 flex gap-1 opacity-60">
+                        <div className="w-1 h-4 bg-gradient-to-b from-primary to-accent rounded-full" />
+                        <div className="w-1 h-3 bg-gradient-to-b from-primary to-accent rounded-full mt-1" />
+                        <div className="w-1 h-5 bg-gradient-to-b from-primary to-accent rounded-full" />
+                      </div>
+                      <div className="bg-gradient-to-br from-primary to-accent p-3 rounded-xl">
+                        <Timer className="w-8 h-8 md:w-10 md:h-10 text-white" />
+                      </div>
+                    </div>
+                    <h3 className="text-base md:text-sm font-bold uppercase text-white mb-2">Get Instant Credit</h3>
+                    <p className="text-xs md:text-xs text-gray-300 leading-relaxed">Get credit in minutes, anytime!</p>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <p className="text-sm font-semibold text-foreground">Instant Credit, Anytime!</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">Get your credit line in minutes — no paperwork, no credit history needed.</p>
-                </div>
-              </div>
 
-              {/* Step 2 */}
-              <div className="flex items-center gap-4 p-4 bg-gradient-to-r from-accent/20 to-primary/20 rounded-xl border border-accent/30 shadow-sm">
-                <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-accent to-primary rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md">
-                  2
+                {/* Card 2: UPI INTEGRATION */}
+                <div className="flex-1 p-5 md:p-4 rounded-xl border-2 border-accent/50 bg-gradient-to-br from-slate-800/80 via-purple-800/30 to-slate-800/80 shadow-lg shadow-accent/20 hover:shadow-accent/30 transition-all hover:scale-[1.02] relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-primary/10 pointer-events-none" />
+                  <div className="relative z-10 flex flex-col items-center text-center">
+                    {/* QR Code Icon */}
+                    <div className="mb-4 bg-gradient-to-br from-accent to-primary p-3 rounded-xl">
+                      <QrCode className="w-8 h-8 md:w-10 md:h-10 text-white" />
+                    </div>
+                    <h3 className="text-base md:text-sm font-bold uppercase text-white mb-2">Use Credit For UPI</h3>
+                    <p className="text-xs md:text-xs text-gray-300 leading-relaxed">Keep making UPI payments - on credit!</p>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <p className="text-sm font-semibold text-foreground">Use Credit for UPI Payments</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">Keep scanning and paying — now on credit!</p>
-                </div>
-              </div>
 
-              {/* Step 3 */}
-              <div className="flex items-center gap-4 p-4 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl border border-primary/30 shadow-sm">
-                <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md">
-                  3
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-semibold text-foreground">Boost Your Credit Score, Daily!</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">Build your credit score just by paying through UPI — the smarter way to grow your credit.</p>
+                {/* Card 3: SCORE BUILDER */}
+                <div className="flex-1 p-5 md:p-4 rounded-xl border-2 border-primary/50 bg-gradient-to-br from-slate-800/80 via-purple-800/30 to-slate-800/80 shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all hover:scale-[1.02] relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 pointer-events-none" />
+                  <div className="relative z-10 flex flex-col items-center text-center">
+                    {/* Gauge Icon with plus sign */}
+                    <div className="relative mb-4">
+                      <div className="bg-gradient-to-br from-primary to-accent p-3 rounded-xl relative">
+                        <Gauge className="w-8 h-8 md:w-10 md:h-10 text-white" />
+                        <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center border-2 border-slate-800">
+                          <span className="text-white text-xs font-bold">+</span>
+                        </div>
+                      </div>
+                    </div>
+                    <h3 className="text-base md:text-sm font-bold uppercase text-white mb-2">Boost Your Credit Score</h3>
+                    <p className="text-xs md:text-xs text-gray-300 leading-relaxed">Keep paying through UPI - build your credit score!</p>
+                  </div>
                 </div>
               </div>
-            </div>
             </div>
           </div>
 
