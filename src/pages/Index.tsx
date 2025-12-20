@@ -54,8 +54,11 @@ const Index = () => {
       // Calculate available height for the image
       const availableHeight = viewportHeight - stickyCTAHeight - headerHeight - descriptionHeight - padding;
       
+      // Increase height by 40% more
+      const increasedHeight = availableHeight * 1.4;
+      
       // Set max height (with minimum of 250px to ensure visibility)
-      setImageMaxHeight(Math.max(availableHeight, 250));
+      setImageMaxHeight(Math.max(increasedHeight, 250));
     };
 
     // Calculate on mount and when window resizes
