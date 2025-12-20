@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { GraduationCap, Briefcase, HelpCircle, Users } from "lucide-react";
+import { GraduationCap, Briefcase, HelpCircle, Users, Timer, QrCode, Gauge } from "lucide-react";
 import CredUPILogo from "@/components/CredUPILogo";
 import WaitlistModal from "@/components/WaitlistModal";
 import { trackCTA1Click, trackPageView } from "@/lib/analytics";
@@ -82,26 +82,157 @@ const Index = () => {
           </h1>
 
           {/* How It Works - Infographic */}
-          <div className="mb-0 relative overflow-hidden">
-            <img 
-              src="/images/how-it-works-infographic.png" 
-              alt="How it works - Get Instant Credit, Use Credit For UPI, Boost Your Credit Score"
-              className="w-full h-auto rounded-2xl select-none pointer-events-none"
-              style={{
-                maxHeight: imageMaxHeight ? `${imageMaxHeight}px` : 'none',
-                objectFit: 'contain',
-                objectPosition: 'top',
-                display: 'block',
-                touchAction: 'none',
-                userSelect: 'none',
-                WebkitUserSelect: 'none',
-                WebkitTouchCallout: 'none',
-                transform: 'none',
-                transition: 'none',
-                animation: 'none'
-              }}
-              draggable="false"
-            />
+          <div className="mb-0 relative" style={{ maxHeight: imageMaxHeight ? `${imageMaxHeight}px` : 'none', overflow: 'hidden' }}>
+            {/* Dark indigo/blue gradient background */}
+            <div className="relative rounded-2xl p-4 md:p-6" style={{
+              background: 'linear-gradient(to bottom right, #1e1b4b, #312e81, #1e1b4b)',
+            }}>
+              {/* Title */}
+              <h2 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-center text-white">How it works</h2>
+            
+              {/* Three cards stacked vertically */}
+              <div className="flex flex-col gap-3 md:gap-4">
+                {/* Card 1: Get Instant Credit */}
+                <div className="relative rounded-xl p-[2px]" style={{
+                  background: 'linear-gradient(to right, #3b82f6, #ec4899)',
+                  boxShadow: '0 0 20px rgba(59, 130, 246, 0.5), 0 0 40px rgba(236, 72, 153, 0.3)'
+                }}>
+                  <div className="rounded-xl p-4 md:p-5" style={{
+                    background: 'rgba(30, 27, 75, 0.7)'
+                  }}>
+                  <div className="flex flex-col items-center text-center">
+                    {/* Stopwatch Icon with speed lines */}
+                    <div className="relative mb-3 md:mb-4">
+                      <div className="absolute -left-2 md:-left-3 top-1/2 -translate-y-1/2 flex gap-1 opacity-70">
+                        <div className="w-1 h-4 bg-gradient-to-b from-blue-400 to-purple-500 rounded-full" />
+                        <div className="w-1 h-3 bg-gradient-to-b from-blue-400 to-purple-500 rounded-full mt-1" />
+                        <div className="w-1 h-5 bg-gradient-to-b from-blue-400 to-purple-500 rounded-full" />
+                      </div>
+                      <div className="p-2 md:p-3 rounded-xl" style={{
+                        background: 'linear-gradient(to bottom right, #8b5cf6, #60a5fa)',
+                        boxShadow: '0 0 15px rgba(139, 92, 246, 0.6)'
+                      }}>
+                        <Timer className="w-6 h-6 md:w-8 md:h-8 text-white" />
+                      </div>
+                    </div>
+                    <h3 className="text-sm md:text-base font-bold uppercase text-white mb-1 md:mb-2">Get Instant Credit</h3>
+                    <p className="text-xs md:text-sm text-gray-300 leading-relaxed">Get credit in minutes, anytime!</p>
+                  </div>
+                  </div>
+                </div>
+
+                {/* Card 2: Use Credit For UPI */}
+                <div className="relative rounded-xl p-[2px]" style={{
+                  background: 'linear-gradient(to right, #3b82f6, #ec4899)',
+                  boxShadow: '0 0 20px rgba(59, 130, 246, 0.5), 0 0 40px rgba(236, 72, 153, 0.3)'
+                }}>
+                  <div className="rounded-xl p-4 md:p-5" style={{
+                    background: 'rgba(30, 27, 75, 0.7)'
+                  }}>
+                  <div className="flex flex-col items-center text-center">
+                    {/* QR Code with UPI text and logo */}
+                    <div className="mb-3 md:mb-4">
+                      <div className="mb-1.5 flex items-center justify-center gap-1.5">
+                        <span className="text-white text-xs md:text-sm font-semibold">UPI</span>
+                        {/* Triangular logo with green, orange, red gradient */}
+                        <div className="w-4 h-4 md:w-5 md:h-5 relative">
+                          <svg className="w-full h-full" viewBox="0 0 12 12">
+                            <defs>
+                              <linearGradient id="upiLogo" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stopColor="#22c55e" />
+                                <stop offset="50%" stopColor="#f97316" />
+                                <stop offset="100%" stopColor="#ef4444" />
+                              </linearGradient>
+                            </defs>
+                            <path d="M 6 0 L 12 12 L 0 12 Z" fill="url(#upiLogo)" />
+                          </svg>
+                        </div>
+                      </div>
+                      <div className="p-2 md:p-3 rounded-xl bg-slate-900" style={{
+                        boxShadow: '0 0 15px rgba(139, 92, 246, 0.6)'
+                      }}>
+                        <div className="w-6 h-6 md:w-8 md:h-8 relative mx-auto">
+                          <svg className="w-full h-full" viewBox="0 0 100 100" fill="none">
+                            {/* QR code pattern - dark with purple/blue blocks */}
+                            <rect x="10" y="10" width="20" height="20" fill="#8b5cf6" />
+                            <rect x="10" y="40" width="20" height="10" fill="#3b82f6" />
+                            <rect x="10" y="60" width="20" height="20" fill="#8b5cf6" />
+                            <rect x="40" y="10" width="10" height="20" fill="#3b82f6" />
+                            <rect x="40" y="40" width="20" height="20" fill="#8b5cf6" />
+                            <rect x="40" y="70" width="20" height="10" fill="#3b82f6" />
+                            <rect x="70" y="10" width="20" height="20" fill="#8b5cf6" />
+                            <rect x="70" y="40" width="10" height="20" fill="#3b82f6" />
+                            <rect x="70" y="70" width="20" height="20" fill="#8b5cf6" />
+                            {/* Corner markers */}
+                            <rect x="10" y="10" width="30" height="30" fill="none" stroke="#8b5cf6" strokeWidth="3" />
+                            <rect x="60" y="10" width="30" height="30" fill="none" stroke="#3b82f6" strokeWidth="3" />
+                            <rect x="10" y="60" width="30" height="30" fill="none" stroke="#8b5cf6" strokeWidth="3" />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                    <h3 className="text-sm md:text-base font-bold uppercase text-white mb-1 md:mb-2">Use Credit For UPI</h3>
+                    <p className="text-xs md:text-sm text-gray-300 leading-relaxed">Keep making UPI payments - on credit!</p>
+                  </div>
+                  </div>
+                </div>
+
+                {/* Card 3: Boost Your Credit Score */}
+                <div className="relative rounded-xl p-[2px]" style={{
+                  background: 'linear-gradient(to right, #3b82f6, #ec4899)',
+                  boxShadow: '0 0 20px rgba(59, 130, 246, 0.5), 0 0 40px rgba(236, 72, 153, 0.3)'
+                }}>
+                  <div className="rounded-xl p-4 md:p-5" style={{
+                    background: 'rgba(30, 27, 75, 0.7)'
+                  }}>
+                  <div className="flex flex-col items-center text-center">
+                    {/* Gauge Icon with orange-yellow-green gradient and purple needle */}
+                    <div className="relative mb-3 md:mb-4">
+                      <div className="p-2 md:p-3 rounded-xl bg-slate-900 relative" style={{
+                        boxShadow: '0 0 15px rgba(139, 92, 246, 0.6)'
+                      }}>
+                        <div className="relative w-6 h-6 md:w-8 md:h-8">
+                          <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                            <defs>
+                              <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stopColor="#f97316" />
+                                <stop offset="50%" stopColor="#eab308" />
+                                <stop offset="100%" stopColor="#22c55e" />
+                              </linearGradient>
+                            </defs>
+                            {/* Gauge arc */}
+                            <path
+                              d="M 10,90 A 40,40 0 0,1 90,90"
+                              fill="none"
+                              stroke="url(#gaugeGradient)"
+                              strokeWidth="8"
+                              strokeLinecap="round"
+                            />
+                            {/* Purple needle pointing to green (right side) */}
+                            <line
+                              x1="50"
+                              y1="50"
+                              x2="80"
+                              y2="25"
+                              stroke="#a855f7"
+                              strokeWidth="3"
+                              strokeLinecap="round"
+                            />
+                          </svg>
+                        </div>
+                        {/* Dark circular button with plus sign */}
+                        <div className="absolute -bottom-1 -right-1 w-4 h-4 md:w-5 md:h-5 bg-slate-900 rounded-full flex items-center justify-center border-2 border-slate-700">
+                          <span className="text-white text-[8px] md:text-xs font-bold">+</span>
+                        </div>
+                      </div>
+                    </div>
+                    <h3 className="text-sm md:text-base font-bold uppercase text-white mb-1 md:mb-2">Boost Your Credit Score</h3>
+                    <p className="text-xs md:text-sm text-gray-300 leading-relaxed">Keep paying through UPI - build your credit score!</p>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <p className="text-sm md:text-lg text-muted-foreground mt-4 md:mt-6 mb-3 md:mb-4 text-center">
