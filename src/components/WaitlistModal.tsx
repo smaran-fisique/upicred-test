@@ -33,11 +33,13 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
   const [userType, setUserType] = useState("");
   const [phone, setPhone] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Reset confetti when modal closes
   useEffect(() => {
     if (!open) {
       setShowConfetti(false);
+      setIsSubmitting(false);
     }
   }, [open]);
 
@@ -64,6 +66,13 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
   };
 
   const handleSubmit = async () => {
+    // Prevent double submission
+    if (isSubmitting || hasBeenSavedRef.current) {
+      console.log('⚠️ Submission already in progress or completed, ignoring duplicate submit');
+      return;
+    }
+    
+    setIsSubmitting(true);
     trackFormStep3(phone);
     trackFormCompletion({ intent, userType, phone });
     
@@ -77,19 +86,26 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
     // Mark as saved so it doesn't save again on modal close
     hasBeenSavedRef.current = true;
     
-    // Submit to Google Sheets
-    console.log('💾 Saving completed entry:', entry);
-    await submitToGoogleSheets(entry);
-    
-    // Also store in localStorage as backup
-    const existing = JSON.parse(localStorage.getItem("credupi_waitlist") || "[]");
-    existing.push(entry);
-    localStorage.setItem("credupi_waitlist", JSON.stringify(existing));
-    
-    setStep(4);
-    setShowConfetti(true);
-    // Hide confetti after animation
-    setTimeout(() => setShowConfetti(false), 3000);
+    try {
+      // Submit to Google Sheets
+      console.log('💾 Saving completed entry:', entry);
+      await submitToGoogleSheets(entry);
+      
+      // Also store in localStorage as backup
+      const existing = JSON.parse(localStorage.getItem("credupi_waitlist") || "[]");
+      existing.push(entry);
+      localStorage.setItem("credupi_waitlist", JSON.stringify(existing));
+      
+      setStep(4);
+      setShowConfetti(true);
+      // Hide confetti after animation
+      setTimeout(() => setShowConfetti(false), 3000);
+    } catch (error) {
+      console.error('❌ Error submitting form:', error);
+      // Reset submitting state on error so user can retry
+      setIsSubmitting(false);
+      hasBeenSavedRef.current = false;
+    }
   };
 
   const handleClose = (newOpenState: boolean) => {
@@ -280,10 +296,10 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
             </div>
             <Button
               onClick={handleSubmit}
-              disabled={!isPhoneValid}
+              disabled={!isPhoneValid || isSubmitting}
               className="w-full mt-6 bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity"
             >
-              Add to Waitlist
+              {isSubmitting ? 'Submitting...' : 'Add to Waitlist'}
             </Button>
           </>
         )}
