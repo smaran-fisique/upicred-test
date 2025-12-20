@@ -17,18 +17,12 @@ export interface WaitlistEntry {
 export async function submitToGoogleSheets(entry: WaitlistEntry): Promise<boolean> {
   // Get the Google Apps Script Web App URL from environment variable
   // Fallback to hardcoded URL if env var is not set (for production builds)
-  const scriptUrl = import.meta.env.VITE_GOOGLE_APPS_SCRIPT_URL || 
-    'https://script.google.com/macros/s/AKfycbxLcuFznQGhIFh7eiLDpV-xU4Lr_gP-n64IVYYphuNw9s0lDZBEjUlDe__3N7N4JRHQ9w/exec';
+  const envUrl = import.meta.env.VITE_GOOGLE_APPS_SCRIPT_URL;
+  const fallbackUrl = 'https://script.google.com/macros/s/AKfycbxLcuFznQGhIFh7eiLDpV-xU4Lr_gP-n64IVYYphuNw9s0lDZBEjUlDe__3N7N4JRHQ9w/exec';
+  const scriptUrl = envUrl || fallbackUrl;
 
-  if (!scriptUrl) {
-    console.error('❌ Google Apps Script URL not configured.');
-    console.error('Please set VITE_GOOGLE_APPS_SCRIPT_URL in your deployment environment variables.');
-    console.error('For Lovable: Go to Project Settings → Environment Variables');
-    return false;
-  }
-  
   // Log if using fallback URL
-  if (!import.meta.env.VITE_GOOGLE_APPS_SCRIPT_URL) {
+  if (!envUrl) {
     console.warn('⚠️ Using fallback Google Apps Script URL (env var not set)');
   }
 
