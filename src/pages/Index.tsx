@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { GraduationCap, Briefcase, HelpCircle, Users } from "lucide-react";
@@ -10,6 +10,8 @@ const Index = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [disclaimerOpen, setDisclaimerOpen] = useState(false);
   const [waitlistCount, setWaitlistCount] = useState(2847);
+  const [imageMaxHeight, setImageMaxHeight] = useState<number | null>(null);
+  const heroSectionRef = useRef<HTMLDivElement>(null);
 
   // Simulate waitlist count (in real app, fetch from API)
   useEffect(() => {
@@ -25,6 +27,56 @@ const Index = () => {
     trackPageView(window.location.pathname, 'CredUPI - Home');
   }, []);
 
+  // Calculate available height for image to ensure it's visible above sticky CTA
+  useEffect(() => {
+    const calculateImageHeight = () => {
+      if (!heroSectionRef.current) return;
+      
+      const viewportHeight = window.innerHeight;
+      // Sticky CTA height: ~90px (py-3 + mb-2 + h-14 button + padding)
+      const stickyCTAHeight = 90;
+      
+      // Measure actual header section height (logo + title + padding)
+      const heroSection = heroSectionRef.current;
+      const headerElements = heroSection.querySelectorAll('div:first-child, h1');
+      let headerHeight = 0;
+      headerElements.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        headerHeight += rect.height;
+      });
+      headerHeight += 40; // Add padding/margins
+      
+      // Description text below image: ~40px
+      const descriptionHeight = 40;
+      // Additional padding and margins: ~20px
+      const padding = 20;
+      
+      // Calculate available height for the image
+      const availableHeight = viewportHeight - stickyCTAHeight - headerHeight - descriptionHeight - padding;
+      
+      // Set max height (with minimum of 250px to ensure visibility)
+      setImageMaxHeight(Math.max(availableHeight, 250));
+    };
+
+    // Calculate on mount and when window resizes
+    calculateImageHeight();
+    
+    // Use ResizeObserver for more accurate measurements
+    const resizeObserver = new ResizeObserver(calculateImageHeight);
+    if (heroSectionRef.current) {
+      resizeObserver.observe(heroSectionRef.current);
+    }
+    
+    window.addEventListener('resize', calculateImageHeight);
+    window.addEventListener('orientationchange', calculateImageHeight);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', calculateImageHeight);
+      window.removeEventListener('orientationchange', calculateImageHeight);
+    };
+  }, []);
+
   const handleCTA1Click = () => {
     trackCTA1Click();
     setModalOpen(true);
@@ -33,7 +85,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative overflow-hidden">
+      <section ref={heroSectionRef} className="relative overflow-hidden">
         {/* Gradient Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/10" />
         <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
@@ -49,11 +101,17 @@ const Index = () => {
           </h1>
 
           {/* How It Works - Infographic */}
-          <div className="mb-0 relative">
+          <div className="mb-0 relative overflow-hidden">
             <img 
               src="/images/how-it-works-infographic.png" 
               alt="How it works - Get Instant Credit, Use Credit For UPI, Boost Your Credit Score"
               className="w-full h-auto rounded-2xl"
+              style={{
+                maxHeight: imageMaxHeight ? `${imageMaxHeight}px` : 'none',
+                objectFit: 'contain',
+                objectPosition: 'top',
+                display: 'block'
+              }}
             />
           </div>
 
