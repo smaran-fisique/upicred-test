@@ -38,13 +38,13 @@ const Index = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/10" />
         <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         
-        <div className="relative max-w-lg mx-auto px-6 pt-8 pb-6">
+        <div className="relative max-w-lg mx-auto px-4 md:px-6 pt-6 md:pt-8 pb-4 md:pb-6">
           {/* Header with Logo */}
-          <div className="flex items-center justify-center mb-8">
+          <div className="flex items-center justify-center mb-4 md:mb-8">
             <CredUPILogo />
           </div>
 
-          <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-6 text-center">
+          <h1 className="text-2xl md:text-4xl font-bold leading-tight mb-4 md:mb-6 text-center">
             Build your credit score while paying with UPI
           </h1>
 
@@ -55,76 +55,76 @@ const Index = () => {
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 rounded-2xl" />
             
             {/* Glowing border effect */}
-            <div className="relative p-6 md:p-8 rounded-2xl border-2 border-primary/40 shadow-2xl shadow-primary/30 backdrop-blur-sm bg-gradient-to-br from-slate-800/90 via-purple-900/20 to-slate-800/90">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 md:mb-8 text-center text-white">How it works</h2>
+            <div className="relative p-3 md:p-8 rounded-2xl border-2 border-primary/40 shadow-2xl shadow-primary/30 backdrop-blur-sm bg-gradient-to-br from-slate-800/90 via-purple-900/20 to-slate-800/90">
+              <h2 className="text-2xl md:text-4xl font-bold mb-3 md:mb-8 text-center text-white">How it works</h2>
             
               {/* Three cards in horizontal layout */}
-              <div className="flex flex-col md:flex-row gap-4 md:gap-3">
+              <div className="flex flex-col md:flex-row gap-2 md:gap-3">
                 {/* Card 1: FAST APPROVAL */}
-                <div className="flex-1 p-5 md:p-4 rounded-xl border-2 border-primary/50 bg-gradient-to-br from-slate-800/80 via-purple-800/30 to-slate-800/80 shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all hover:scale-[1.02] relative overflow-hidden">
+                <div className="flex-1 p-3 md:p-4 rounded-xl border-2 border-primary/50 bg-gradient-to-br from-slate-800/80 via-purple-800/30 to-slate-800/80 shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all hover:scale-[1.02] relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 pointer-events-none" />
                   <div className="relative z-10 flex flex-col items-center text-center">
                     {/* Stopwatch Icon with speed lines */}
-                    <div className="relative mb-4">
-                      <div className="absolute -left-2 top-1/2 -translate-y-1/2 flex gap-1 opacity-60">
-                        <div className="w-1 h-4 bg-gradient-to-b from-primary to-accent rounded-full" />
-                        <div className="w-1 h-3 bg-gradient-to-b from-primary to-accent rounded-full mt-1" />
-                        <div className="w-1 h-5 bg-gradient-to-b from-primary to-accent rounded-full" />
+                    <div className="relative mb-2 md:mb-4">
+                      <div className="absolute -left-1 md:-left-2 top-1/2 -translate-y-1/2 flex gap-0.5 md:gap-1 opacity-60">
+                        <div className="w-0.5 md:w-1 h-3 md:h-4 bg-gradient-to-b from-primary to-accent rounded-full" />
+                        <div className="w-0.5 md:w-1 h-2 md:h-3 bg-gradient-to-b from-primary to-accent rounded-full mt-0.5 md:mt-1" />
+                        <div className="w-0.5 md:w-1 h-3.5 md:h-5 bg-gradient-to-b from-primary to-accent rounded-full" />
                       </div>
-                      <div className="bg-gradient-to-br from-primary to-accent p-3 rounded-xl">
-                        <Timer className="w-8 h-8 md:w-10 md:h-10 text-white" />
+                      <div className="bg-gradient-to-br from-primary to-accent p-2 md:p-3 rounded-xl">
+                        <Timer className="w-6 h-6 md:w-10 md:h-10 text-white" />
                       </div>
                     </div>
-                    <h3 className="text-base md:text-sm font-bold uppercase text-white mb-2">Get Instant Credit</h3>
-                    <p className="text-xs md:text-xs text-gray-300 leading-relaxed">Get credit in minutes, anytime!</p>
+                    <h3 className="text-xs md:text-sm font-bold uppercase text-white mb-1 md:mb-2 leading-tight">Get Instant Credit</h3>
+                    <p className="text-[10px] md:text-xs text-gray-300 leading-tight md:leading-relaxed">Get credit in minutes, anytime!</p>
                   </div>
                 </div>
 
                 {/* Card 2: UPI INTEGRATION */}
-                <div className="flex-1 p-5 md:p-4 rounded-xl border-2 border-accent/50 bg-gradient-to-br from-slate-800/80 via-purple-800/30 to-slate-800/80 shadow-lg shadow-accent/20 hover:shadow-accent/30 transition-all hover:scale-[1.02] relative overflow-hidden">
+                <div className="flex-1 p-3 md:p-4 rounded-xl border-2 border-accent/50 bg-gradient-to-br from-slate-800/80 via-purple-800/30 to-slate-800/80 shadow-lg shadow-accent/20 hover:shadow-accent/30 transition-all hover:scale-[1.02] relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-primary/10 pointer-events-none" />
                   <div className="relative z-10 flex flex-col items-center text-center">
                     {/* QR Code Icon */}
-                    <div className="mb-4 bg-gradient-to-br from-accent to-primary p-3 rounded-xl">
-                      <QrCode className="w-8 h-8 md:w-10 md:h-10 text-white" />
+                    <div className="mb-2 md:mb-4 bg-gradient-to-br from-accent to-primary p-2 md:p-3 rounded-xl">
+                      <QrCode className="w-6 h-6 md:w-10 md:h-10 text-white" />
                     </div>
-                    <h3 className="text-base md:text-sm font-bold uppercase text-white mb-2">Use Credit For UPI</h3>
-                    <p className="text-xs md:text-xs text-gray-300 leading-relaxed">Keep making UPI payments - on credit!</p>
+                    <h3 className="text-xs md:text-sm font-bold uppercase text-white mb-1 md:mb-2 leading-tight">Use Credit For UPI</h3>
+                    <p className="text-[10px] md:text-xs text-gray-300 leading-tight md:leading-relaxed">Keep making UPI payments - on credit!</p>
                   </div>
                 </div>
 
                 {/* Card 3: SCORE BUILDER */}
-                <div className="flex-1 p-5 md:p-4 rounded-xl border-2 border-primary/50 bg-gradient-to-br from-slate-800/80 via-purple-800/30 to-slate-800/80 shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all hover:scale-[1.02] relative overflow-hidden">
+                <div className="flex-1 p-3 md:p-4 rounded-xl border-2 border-primary/50 bg-gradient-to-br from-slate-800/80 via-purple-800/30 to-slate-800/80 shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all hover:scale-[1.02] relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 pointer-events-none" />
                   <div className="relative z-10 flex flex-col items-center text-center">
                     {/* Gauge Icon with plus sign */}
-                    <div className="relative mb-4">
-                      <div className="bg-gradient-to-br from-primary to-accent p-3 rounded-xl relative">
-                        <Gauge className="w-8 h-8 md:w-10 md:h-10 text-white" />
-                        <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center border-2 border-slate-800">
-                          <span className="text-white text-xs font-bold">+</span>
+                    <div className="relative mb-2 md:mb-4">
+                      <div className="bg-gradient-to-br from-primary to-accent p-2 md:p-3 rounded-xl relative">
+                        <Gauge className="w-6 h-6 md:w-10 md:h-10 text-white" />
+                        <div className="absolute -bottom-0.5 md:-bottom-1 -right-0.5 md:-right-1 w-4 h-4 md:w-5 md:h-5 bg-blue-500 rounded-full flex items-center justify-center border-2 border-slate-800">
+                          <span className="text-white text-[8px] md:text-xs font-bold">+</span>
                         </div>
                       </div>
                     </div>
-                    <h3 className="text-base md:text-sm font-bold uppercase text-white mb-2">Boost Your Credit Score</h3>
-                    <p className="text-xs md:text-xs text-gray-300 leading-relaxed">Keep paying through UPI - build your credit score!</p>
+                    <h3 className="text-xs md:text-sm font-bold uppercase text-white mb-1 md:mb-2 leading-tight">Boost Your Credit Score</h3>
+                    <p className="text-[10px] md:text-xs text-gray-300 leading-tight md:leading-relaxed">Keep paying through UPI - build your credit score!</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <p className="text-lg text-muted-foreground mt-6 mb-4 text-center">
+          <p className="text-sm md:text-lg text-muted-foreground mt-4 md:mt-6 mb-3 md:mb-4 text-center">
             Turn your everyday UPI payments into credit history. No credit card needed.
           </p>
         </div>
       </section>
 
       {/* Who This Is For */}
-      <section className="max-w-lg mx-auto px-6 pt-4 pb-8">
-        <h2 className="text-xl font-bold mb-4 text-center">Perfect for you if you're:</h2>
+      <section className="max-w-lg mx-auto px-4 md:px-6 pt-3 md:pt-4 pb-6 md:pb-8">
+        <h2 className="text-lg md:text-xl font-bold mb-3 md:mb-4 text-center">Perfect for you if you're:</h2>
         
-        <div className="space-y-2 mb-4">
+        <div className="space-y-1.5 md:space-y-2 mb-3 md:mb-4">
           <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-xl">
             <GraduationCap className="w-5 h-5 text-primary shrink-0" />
             <span className="text-sm">A college student starting your credit journey</span>
