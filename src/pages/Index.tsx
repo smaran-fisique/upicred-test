@@ -30,35 +30,13 @@ const Index = () => {
   // Calculate available height for image to ensure it's visible above sticky CTA
   useEffect(() => {
     const calculateImageHeight = () => {
-      if (!heroSectionRef.current) return;
-      
       const viewportHeight = window.innerHeight;
-      // Sticky CTA height: ~90px (py-3 + mb-2 + h-14 button + padding)
-      const stickyCTAHeight = 90;
       
-      // Measure actual header section height (logo + title + padding)
-      const heroSection = heroSectionRef.current;
-      const headerElements = heroSection.querySelectorAll('div:first-child, h1');
-      let headerHeight = 0;
-      headerElements.forEach((el) => {
-        const rect = el.getBoundingClientRect();
-        headerHeight += rect.height;
-      });
-      headerHeight += 40; // Add padding/margins
+      // Use 85% of viewport height for the image
+      const imageHeight = viewportHeight * 0.85;
       
-      // Description text below image: ~40px
-      const descriptionHeight = 40;
-      // Additional padding and margins: ~20px
-      const padding = 20;
-      
-      // Calculate available height for the image
-      const availableHeight = viewportHeight - stickyCTAHeight - headerHeight - descriptionHeight - padding;
-      
-      // Increase height by 40% more (total 96% increase from original)
-      const increasedHeight = availableHeight * 1.96;
-      
-      // Set max height (with minimum of 250px to ensure visibility)
-      setImageMaxHeight(Math.max(increasedHeight, 250));
+      // Set max height
+      setImageMaxHeight(imageHeight);
     };
 
     // Calculate on mount and when window resizes
