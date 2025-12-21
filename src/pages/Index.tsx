@@ -10,9 +10,6 @@ const Index = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [disclaimerOpen, setDisclaimerOpen] = useState(false);
   const [waitlistCount, setWaitlistCount] = useState(2847);
-  const [imageMaxHeight, setImageMaxHeight] = useState<number | null>(null);
-  const heroSectionRef = useRef<HTMLDivElement>(null);
-
   // Simulate waitlist count (in real app, fetch from API)
   useEffect(() => {
     const stored = localStorage.getItem("credupi_waitlist");
@@ -27,37 +24,6 @@ const Index = () => {
     trackPageView(window.location.pathname, 'CredUPI - Home');
   }, []);
 
-  // Calculate available height for image to ensure it's visible above sticky CTA
-  useEffect(() => {
-    const calculateImageHeight = () => {
-      const viewportHeight = window.innerHeight;
-      
-      // Use 65% of viewport height for the image
-      const imageHeight = viewportHeight * 0.65;
-      
-      // Set max height
-      setImageMaxHeight(imageHeight);
-    };
-
-    // Calculate on mount and when window resizes
-    calculateImageHeight();
-    
-    // Use ResizeObserver for more accurate measurements
-    const resizeObserver = new ResizeObserver(calculateImageHeight);
-    if (heroSectionRef.current) {
-      resizeObserver.observe(heroSectionRef.current);
-    }
-    
-    window.addEventListener('resize', calculateImageHeight);
-    window.addEventListener('orientationchange', calculateImageHeight);
-
-    return () => {
-      resizeObserver.disconnect();
-      window.removeEventListener('resize', calculateImageHeight);
-      window.removeEventListener('orientationchange', calculateImageHeight);
-    };
-  }, []);
-
   const handleCTA1Click = () => {
     trackCTA1Click();
     setModalOpen(true);
@@ -66,7 +32,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section ref={heroSectionRef} className="relative overflow-hidden">
+      <section className="relative overflow-hidden">
         {/* Gradient Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/10" />
         <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
@@ -81,27 +47,48 @@ const Index = () => {
             Build your credit score while paying with UPI
           </h1>
 
-          {/* How It Works - Infographic */}
-          <div className="mb-0 relative overflow-hidden">
-            <img 
-              src="/images/how-it-works-infographic.png" 
-              alt="How it works - Get Instant Credit, Use Credit For UPI, Boost Your Credit Score"
-              className="w-full h-auto rounded-2xl select-none pointer-events-none"
-              style={{
-                maxHeight: imageMaxHeight ? `${imageMaxHeight}px` : 'none',
-                objectFit: 'contain',
-                objectPosition: 'top',
-                display: 'block',
-                touchAction: 'none',
-                userSelect: 'none',
-                WebkitUserSelect: 'none',
-                WebkitTouchCallout: 'none',
-                transform: 'none',
-                transition: 'none',
-                animation: 'none'
-              }}
-              draggable="false"
-            />
+          {/* How It Works - Compact Card Layout */}
+          <div className="mb-0 p-6 bg-gradient-to-br from-card via-card/90 to-card/80 backdrop-blur-md rounded-2xl border-2 border-primary/30 shadow-2xl shadow-primary/20 relative overflow-hidden">
+            {/* Subtle gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 pointer-events-none" />
+            <div className="relative z-10">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">How it works</h2>
+            
+            <div className="flex flex-col gap-3">
+              {/* Step 1 */}
+              <div className="flex items-center gap-4 p-4 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl border border-primary/30 shadow-sm">
+                <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md">
+                  1
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-foreground">Instant Credit, Anytime!</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">Get your credit line in minutes — no paperwork, no credit history needed.</p>
+                </div>
+              </div>
+
+              {/* Step 2 */}
+              <div className="flex items-center gap-4 p-4 bg-gradient-to-r from-accent/20 to-primary/20 rounded-xl border border-accent/30 shadow-sm">
+                <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-accent to-primary rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md">
+                  2
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-foreground">Use Credit for UPI Payments</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">Keep scanning and paying — now on credit!</p>
+                </div>
+              </div>
+
+              {/* Step 3 */}
+              <div className="flex items-center gap-4 p-4 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl border border-primary/30 shadow-sm">
+                <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md">
+                  3
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-foreground">Boost Your Credit Score, Daily!</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">Build your credit score just by paying through UPI — the smarter way to grow your credit.</p>
+                </div>
+              </div>
+            </div>
+            </div>
           </div>
 
           <p className="text-sm md:text-lg text-muted-foreground mt-4 md:mt-6 mb-3 md:mb-4 text-center">
